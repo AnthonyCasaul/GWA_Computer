@@ -1,70 +1,126 @@
 <!DOCTYPE html>
-
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Add Staff V2</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="addstaffv2.css">
-    </head>
+  <head>
+    <title>Dynamic Form</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      .input-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
 
-    <body>
+      .input-group label {
+        margin-right: 10px;
+      }
 
-        <nav class="navigator"> 
-               
-           
-            <img src="img/umaklogo.png" class="umaklogo">
-                <h1 class="umaktext">UNIVERSITY OF MAKATI</h1>
-              
-           <div class="ImgIcon"> 
-           </div>
-        </nav> 
-        <div class="container">
-        <div class="mainField"> <br> <br>
-            
-            <div class="userLogo">
-              
-            </div> 
-          
-            <br> <br>
-           
-            <div class="userForm">
-                <table>
-                    <form>  
-                        <tr>
-                            <td><label for="">GRADE</label></td>
-                            <td><input type="text" placeholder=" "></td>
-                        </tr>
-                        
-                        <tr>
-                            <td><label for="">UNIT</label></td>
-                            <td><input type="text" placeholder=" "></td>
-                        </tr>
+      .input-group input {
+        width: 200px;
+      }
+    </style>
+    <script>
+      $(document).ready(function () {
+        var counter = 2;
+        var inputValues1 = [];
+        var inputValues2 = [];
 
-                        <tr>
-                            <td><label for="">GWA</label></td>
-                            <td><input type="text" placeholder=" "></td>
-                        </tr>
+        $("#addButton").click(function () {
+          var newInputGroup = $("<div>").addClass("input-group");
 
+          for (var i = 0; i < 2; i++) {
+            var newTextBox = $("<div>");
+            var inputId = "textbox" + counter;
 
-                        
-                    </form>
-                </table> 
-                </div>
-                    <br> <br>
+            newTextBox.html(
+              '<label for="' +
+                inputId +
+                '">Textbox #' +
+                counter +
+                ":</label>" +
+                '<input type="text" name="' +
+                inputId +
+                '" id="' +
+                inputId +
+                '">'
+            );
 
-            
-                </div>
-                 
-            </div>
+            newInputGroup.append(newTextBox);
+            counter++;
+          }
+
+          newInputGroup.appendTo("#TextBoxesGroup");
+        });
+
+        $("#removeButton").click(function () {
+          if (counter <= 3) {
+            alert("Cannot remove all textboxes!");
+            return false;
+          }
+
+          counter -= 2;
+          $(".input-group:last-of-type").remove();
+        });
+
+        $("#storeButton").click(function () {
+          inputValues1 = [];
+          inputValues2 = [];
+          var inputs = $(".input-group input");
+
+          for (var i = 0; i < inputs.length; i += 2) {
+            inputValues1.push(parseFloat(inputs[i].value));
+            inputValues2.push(parseFloat(inputs[i + 1].value));
+          }
+
+          var multipliedValues = [];
+          for (var j = 0; j < inputValues1.length; j++) {
+            multipliedValues.push(inputValues1[j] * inputValues2[j]);
+          }
+
+          var sumMultiplied = multipliedValues.reduce(function (a, b) {
+            return a + b;
+          });
+
+          var sumInput2 = inputValues2.reduce(function (a, b) {
+            return a + b;
+          });
+
+          var result = sumMultiplied / sumInput2;
+
+          console.log("Input values 1:", inputValues1);
+          console.log("Input values 2:", inputValues2);
+          console.log("Multiplied values:", multipliedValues);
+          console.log("Sum of multiplied values:", sumMultiplied);
+          console.log("Sum of input values 2:", sumInput2);
+          console.log("Result:", result);
+
+          $("#resultDiv").text("Result: " + result);
+        });
+
+        $("#clearButton").click(function () {
+          $(".input-group input").val("");
+          $("#resultDiv").text("");
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div id="TextBoxesGroup">
+      <div class="input-group">
+        <div>
+          <label for="textbox1">Textbox #1:</label>
+          <input type="text" name="textbox1" id="textbox1" />
         </div>
-
-     <br> <br> <br>
-        
+        <div>
+          <label for="textbox2">Textbox #2:</label>
+          <input type="text" name="textbox2" id="textbox2" />
+        </div>
+      </div>
     </div>
-    </body>
+    <input type="button" value="Add Button" id="addButton" />
+    <input type="button" value="Remove Button" id="removeButton" />
+    <input type="button" value="Store Values" id="storeButton" />
+    <input type="button" value="Clear" id="clearButton" />
 
-    <footer class="mainFooter"> </footer>
+    <div id="resultDiv"></div>
+  </body>
 </html>
