@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Dynamic Form</title>
+    <link rel="stylesheet" href="gwacompute.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
       .input-group {
@@ -29,14 +30,13 @@
 
           for (var i = 0; i < 2; i++) {
             var newTextBox = $("<div>");
-            var inputId = "textbox" + counter;
+            var inputId = "textbox";
 
             newTextBox.html(
               '<label for="' +
                 inputId +
-                '">Textbox #' +
-                counter +
-                ":</label>" +
+                '">' +
+                "</label>" +
                 '<input type="text" name="' +
                 inputId +
                 '" id="' +
@@ -104,23 +104,30 @@
     </script>
   </head>
   <body>
+    
+    <div class="container"> 
+
     <div id="TextBoxesGroup">
       <div class="input-group">
         <div>
-          <label for="textbox1">Textbox #1:</label>
+          <h1>GRADE</h1>
+          <label for="textbox1"> </label>
           <input type="text" name="textbox1" id="textbox1" />
         </div>
         <div>
-          <label for="textbox2">Textbox #2:</label>
+          <h1>UNIT</h1>
+          <label for="textbox2"> </label>
           <input type="text" name="textbox2" id="textbox2" />
         </div>
       </div>
     </div>
-    <input type="button" value="Add Button" id="addButton" />
-    <input type="button" value="Remove Button" id="removeButton" />
-    <input type="button" value="Store Values" id="storeButton" />
-    <input type="button" value="Clear" id="clearButton" />
-
-    <div id="resultDiv"></div>
+    <div id="buttons-inputs">
+      <input type="button" value="Add Button" id="addButton" />
+      <input type="button" value="Remove Button" id="removeButton" />
+      <input type="button" value="Compute GWA" id="storeButton" />
+      <input type="button" value="Clear" id="clearButton" />
+      <div id="resultDiv"></div>
+    </div>
+    </div>
   </body>
 </html>
